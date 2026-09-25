@@ -35,3 +35,7 @@ class OrderNotifications:
     def on_carrier_accepted(self,event):
         if self.settings.carrier_only_ship_status:
             self._send(event.payload['order_id'],'SHIPPED',event.payload['package_id'])
+
+
+def notification_for_processor_state(processor_status):
+    return {'PENDING':'REFUND_PROCESSING','SETTLED':'REFUND_COMPLETE'}.get(processor_status)
