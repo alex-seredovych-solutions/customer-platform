@@ -15,3 +15,7 @@ class OrderMetrics:
     def distinct_shipped_packages(self,order_id):
         return self.db.one("SELECT COUNT(DISTINCT package_id) AS n FROM shipment_facts WHERE order_id=? AND status='SHIPPED'",
                            (order_id,))['n']
+
+
+def accepted_package_count(carrier_events):
+    return len({event['package_id'] for event in carrier_events if event.get('kind') == 'carrier.accepted'})
